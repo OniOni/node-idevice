@@ -1,4 +1,4 @@
-# build pkg-config
+#!/bin/sh
 
 check() {
     if [ ! $? -eq 0 ]; then
@@ -75,10 +75,6 @@ args="--system-libs --no-system-libarchive --no-qt-gui"
 build http://www.cmake.org/files/v2.8/cmake-2.8.10.2.tar.gz
 CMAKE=`pwd`'/fake_root/bin/cmake'
 
-### Building M4
-#build http://ftp.gnu.org/gnu/m4/m4-latest.tar.gz
-#M4=`pwd`'/fake_root/bin/m4'
-
 ### Building Autoconf
 build http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
 
@@ -87,6 +83,7 @@ build http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.9/li
 
 args="-DENABLE_SWIG='OFF'"
 build http://www.libimobiledevice.org/downloads/libplist-1.9.tar.bz2 
+
 build http://www.libimobiledevice.org/downloads/usbmuxd-1.0.8.tar.bz2
 
 build http://www.libimobiledevice.org/downloads/libimobiledevice-1.1.5.tar.bz2
