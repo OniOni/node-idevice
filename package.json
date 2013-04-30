@@ -1,0 +1,18 @@
+{
+  "name": "node-idevice",
+  "version": "0.0.0",
+  "description": "Install apps on your ios device. Node wrapper around ideviceinstaller. ",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "ios",
+    "install",
+    "device",
+    "ideviceinstaller"
+  ],
+  "author": "Mathieu Sabourin",
+  "license": "BSD"
+}

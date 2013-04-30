@@ -1,0 +1,92 @@
+# build pkg-config
+
+check() {
+    if [ ! $? -eq 0 ]; then
+	echo An error occured while setting up $1
+	popd
+	echo cleaning up...
+	rm -r $1
+	exit 1
+    fi
+}
+
+build() {
+    archive=`basename $1`
+    package=`echo $archive | sed 's/\(+*\)\.tar\..*/\1/'`
+    if [ ! -e $package ]; then
+	echo Setting up $package
+	echo fetching from $1
+	curl -# -L $1 > $archive
+	echo extracting from $archive
+	tar xf $archive
+	if [ ! -e $package ]; then
+	    echo Could not find $package
+	    pattern=`echo $package | sed 's/\(+*\)-.*/\1/'`
+	    package=`ls | grep $pattern | grep -v tar`
+	    echo $package should work thought
+	    if [ ! -e $package ]; then
+		echo Still not found ...
+		exit
+	    fi
+	fi
+	rm $archive
+	pushd $package
+	echo Configuring... $args
+	if [ -e configure ]; then
+	    echo using pkg-config -- Installing to $dest
+	    ./configure $args "--prefix="$dest
+	else
+	    echo "using cmake -- Found at $CMAKE with PKG_CONFIG_EXECUTABLE=$PKG_CONFIG_EXECUTABLE"
+	    $CMAKE . -DCMAKE_INSTALL_PREFIX=$dest $args
+	fi
+	check $package
+	echo done
+	echo Building...
+	make
+	check $package 
+	echo Done
+	echo Installing...
+	make install
+	check $package
+	echo Done
+	popd
+    fi
+    args=""
+}
+
+mkdir /tmp/staging_ideviceinstaller
+pushd /tmp/staging_ideviceinstaller
+
+mkdir fake_root
+dest=`pwd`"/fake_root"
+
+mkdir fake_root/pkg-config
+pc_dir=$dest"/lib/pkgconfig"
+
+### Building package config
+args="--with-internal-glib --disable-debug --disable-host-tool --with-pc-path="$pc_dir
+build http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz 
+export PKG_CONFIG=`pwd`"/pkg-config"
+export PKG_CONFIG_EXECUTABLE=$PKG_CONFIG
+echo "Using pkg-config found at "$PKG_CONFIG
+
+### Building CMake
+args="--system-libs --no-system-libarchive --no-qt-gui"
+build http://www.cmake.org/files/v2.8/cmake-2.8.10.2.tar.gz
+CMAKE=`pwd`'/fake_root/bin/cmake'
+
+### Building M4
+#build http://ftp.gnu.org/gnu/m4/m4-latest.tar.gz
+#M4=`pwd`'/fake_root/bin/m4'
+
+### Building Autoconf
+build http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
+
+### Building dependencies
+build http://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.9/libusb-1.0.9.tar.bz2
+
+args="-DENABLE_SWIG='OFF'"
+build http://www.libimobiledevice.org/downloads/libplist-1.9.tar.bz2 
+build http://www.libimobiledevice.org/downloads/usbmuxd-1.0.8.tar.bz2
+
+build http://www.libimobiledevice.org/downloads/libimobiledevice-1.1.5.tar.bz2
