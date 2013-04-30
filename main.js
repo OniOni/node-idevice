@@ -2,16 +2,16 @@
 
 var exec = require('child_process').exec;
 
-var IDevice = function(udid) {
+var IDevice = function (udid) {
     this.udid = udid || false;
     this.cmd = "./ideviceinstaller";
 };
 
-IDevice.prototype._build_cmd = function(options) {
+IDevice.prototype._build_cmd = function (options) {
     var cmd = '';
-    
+
     cmd += this.cmd;
-    
+
     if (this.uuid) {
 	cmd += " -U " + this.udid;
     }
@@ -29,8 +29,8 @@ IDevice.prototype._build_cmd = function(options) {
     return cmd;
 };
 
-IDevice.prototype.list = function(option, cb) {
-    exec(this._build_cmd(option), function(err, stdout, stderr){
+IDevice.prototype.list = function (option, cb) {
+    exec(this._build_cmd(option), function (err, stdout, stderr) {
 	if(err) {
 	    cb(err, stdout);
 	} else {
@@ -47,18 +47,18 @@ IDevice.prototype.list = function(option, cb) {
     });
 };
 
-IDevice.prototype.listInstalled = function(cb) {
+IDevice.prototype.listInstalled = function (cb) {
     this.list("-l", cb);
 };
 
-IDevice.prototype.listSystem = function(cb) {
+IDevice.prototype.listSystem = function (cb) {
     this.list("-l -o list_system", cb);
 };
 
-IDevice.prototype.listAll = function(cb) {
+IDevice.prototype.listAll = function (cb) {
     this.list("-l -o list_all", cb);
 };
 
-module.exports = function(uuid) {
+module.exports = function (uuid) {
   return new IDevice(uuid);
 };
