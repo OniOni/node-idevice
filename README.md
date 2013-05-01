@@ -19,7 +19,7 @@ If you want to build the binary yourself you can try:
 This should pull and build all the dependencies. Be warned this is pretty long.
 
 We currently support installing, removing and listing apps on a device.
-## Installing
+### Installing
 ```javascript
 var app = path.resolve(__dirname, '../path/to/your/App.ipa');
 device.install(app, function (err) {
