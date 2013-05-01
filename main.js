@@ -1,6 +1,7 @@
 "use strict";
 
-var exec = require('child_process').exec;
+var exec = require('child_process').exec,
+    path = require('path');
 
 var IDevice = function (udid) {
     this.udid = udid || false;
@@ -62,6 +63,35 @@ IDevice.prototype.listSystem = function (cb) {
 IDevice.prototype.listAll = function (cb) {
     this.list("-o list_all", cb);
 };
+
+IDevice.prototype.remove = function (app, cb) {
+    exec(this._build_cmd(['-u', app]), function (err, stdout, stderr) {
+	if (err) {
+	    cb(err, stdout);
+	} else {
+	    if (stdout.indexOf('Complete') != -1) {
+		cb(null);
+	    } else {
+		cb(new Error('Removing ' + app + ' failed'));
+	    }
+	}
+    });
+};
+
+IDevice.prototype.install = function (app, cb) {
+    exec(this._build_cmd(['-i', app]), function (err, stdout, stderr) {
+	if (err) {
+	    cb(err, stdout);
+	} else {
+	    if (stdout.indexOf('Complete') != -1) {
+		cb(null);
+	    } else {
+		cb(new Error('Installing ' + app + ' failed'));
+	    }
+	}
+    });
+};
+
 
 module.exports = function (uuid) {
   return new IDevice(uuid);
