@@ -22,7 +22,7 @@ We currently support installing, removing and listing apps on a device.
 ## Installing
 ```javascript
 var app = path.resolve(__dirname, '../path/to/your/App.ipa');
-	device.install(app, function (err) {	
+device.install(app, function (err) {
 	// Do stuff when app is installed
 });
 ```
@@ -30,14 +30,12 @@ var app = path.resolve(__dirname, '../path/to/your/App.ipa');
 ```javascript
 device.remove('domain.organisation.App', function (err) {
 	// Do stuff when app is installed
-})
+});
 ```
 ### Listing Installed apps
 ```javascript
 device.listInstalled(function (err, data) {
 	// data is list of objects, one per app
 	// The object contains info about the app, currently 'name' and 'fullname'
-}
+});
 ```
-
-
