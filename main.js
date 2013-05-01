@@ -24,13 +24,17 @@ IDevice.prototype._build_cmd = function (options) {
 	cmd += " " + options;
     }
 
-    console.log(cmd);
-
     return cmd;
 };
 
 IDevice.prototype.list = function (option, cb) {
-    exec(this._build_cmd(option), function (err, stdout, stderr) {
+    var foption = "-l ";
+
+    if (option) {
+	foption += option;
+    }
+
+    exec(this._build_cmd(foption), function (err, stdout, stderr) {
 	if(err) {
 	    cb(err, stdout);
 	} else {
@@ -48,15 +52,15 @@ IDevice.prototype.list = function (option, cb) {
 };
 
 IDevice.prototype.listInstalled = function (cb) {
-    this.list("-l", cb);
+    this.list(null, cb);
 };
 
 IDevice.prototype.listSystem = function (cb) {
-    this.list("-l -o list_system", cb);
+    this.list("-o list_system", cb);
 };
 
 IDevice.prototype.listAll = function (cb) {
-    this.list("-l -o list_all", cb);
+    this.list("-o list_all", cb);
 };
 
 module.exports = function (uuid) {
