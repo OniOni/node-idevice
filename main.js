@@ -6,6 +6,10 @@ var exec = require('child_process').exec,
 var IDevice = function (udid, opts) {
     this.udid = udid || false;
     this.cmd = "./ideviceinstaller/bin/ideviceinstaller";
+
+    if (opts && opts.cmd) {
+	this.cmd = opts.cmd;
+    }
 };
 
 IDevice.prototype._build_cmd = function (options) {
@@ -93,6 +97,6 @@ IDevice.prototype.install = function (app, cb) {
 };
 
 
-module.exports = function (uuid) {
+module.exports = function (uuid, opts) {
   return new IDevice(uuid);
 };
