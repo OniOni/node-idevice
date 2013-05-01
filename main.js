@@ -3,9 +3,9 @@
 var exec = require('child_process').exec,
     path = require('path');
 
-var IDevice = function (udid) {
+var IDevice = function (udid, opts) {
     this.udid = udid || false;
-    this.cmd = "./ideviceinstaller";
+    this.cmd = "./ideviceinstaller/bin/ideviceinstaller";
 };
 
 IDevice.prototype._build_cmd = function (options) {
