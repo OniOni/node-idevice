@@ -63,7 +63,7 @@ build() {
 	echo done
 	echo Building...
 	make
-	check $package 
+	check $package
 	echo Done
 	echo Installing...
 	make install
@@ -73,26 +73,22 @@ build() {
     else
 	echo Found $package
     fi
+    echo Removing $package..
+    rm $package
     args=""
 }
 
-orig=`pwd`
+mkdir -p ideviceinstaller
+pushd ideviceinstaller
 
-mkdir /tmp/staging_ideviceinstaller
-pushd /tmp/staging_ideviceinstaller
-
-mkdir fake_root
-dest=`pwd`"/fake_root"
+dest=`pwd`
 
 PATH=$dest"/bin":$PATH
 echo $PATH
 
-mkdir fake_root/pkg-config
-pc_dir=$dest"/lib/pkgconfig"
-
 ### Building package config
-args="--with-internal-glib --disable-debug --disable-host-tool --with-pc-path="$pc_dir
-build http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz 
+args="--with-internal-glib --disable-debug --disable-host-tool"
+build http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz
 export PKG_CONFIG=$dest"/bin/pkg-config"
 export PKG_CONFIG_EXECUTABLE=$PKG_CONFIG
 echo "Using pkg-config found at "$PKG_CONFIG
@@ -100,7 +96,7 @@ echo "Using pkg-config found at "$PKG_CONFIG
 ### Building CMake
 args="--system-libs --no-system-libarchive --no-qt-gui"
 build http://www.cmake.org/files/v2.8/cmake-2.8.10.2.tar.gz
-CMAKE=`pwd`'/fake_root/bin/cmake'
+CMAKE=`pwd`'/bin/cmake'
 
 ### Building Autoconf
 build http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
@@ -125,9 +121,10 @@ args="--disable-dependency-tracking --without-python"
 build ftp://xmlsoft.org/libxml2/libxml2-2.9.1.tar.gz
 
 args="-DENABLE_SWIG='OFF'"
-build http://www.libimobiledevice.org/downloads/libplist-1.9.tar.bz2 
+build http://www.libimobiledevice.org/downloads/libplist-1.9.tar.bz2
 
-build http://www.libimobiledevice.org/downloads/usbmuxd-1.0.8.tar.bz2
+build http://git.sukimashita.com/usbmuxd.git
+#build http://www.libimobiledevice.org/downloads/usbmuxd-1.0.8.tar.bz2
 
 args="--disable-dependency-tracking --without-cython"
 build http://www.libimobiledevice.org/downloads/libimobiledevice-1.1.5.tar.bz2
