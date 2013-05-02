@@ -32,6 +32,12 @@ device.remove('domain.organisation.App', function (err) {
 	// Do stuff when app is installed
 });
 ```
+### Checking if an app is Installed
+```javascript
+device.isInstalled(appName, function (err, installed) {
+	// Installed true when app is found on device
+});
+```
 ### Listing Installed apps
 ```javascript
 device.listInstalled(function (err, data) {
