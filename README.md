@@ -7,7 +7,7 @@ The currently preferred way of obtaining the binary is to use brew.
 ```
 brew install ideviceinstaller
 ```
-You can then tell node-idevice to use the command as:
+You can then tell node-idevice to use the command:
 ```javascript
 var device = new IDevice(false, {cmd: 'ideviceinstaller'});
 ```
