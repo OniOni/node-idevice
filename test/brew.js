@@ -10,15 +10,19 @@ device.listInstalled(function (err, data) {
 
     device.remove('io.appium.TestApp', function (err) {
 	assert.equal(null, err);
-    	console.log('Removed !');
+	console.log('Removed !');
 
 	var app = path.resolve(__dirname, '../apps/TestApp.ipa');
 	device.install(app, function (err) {
 	    assert.equal(null, err);
 	    console.log('Installed !');
+
+	    device.isInstalled('TestApp', function (err, installed) {
+		assert.equal(null, err);
+		assert.ok(installed);
+		console.log('On device !');
+	    })
 	});
 
     });
 });
-
-
