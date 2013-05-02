@@ -56,6 +56,28 @@ IDevice.prototype.list = function (option, cb) {
     });
 };
 
+IDevice.prototype.isInstalled = function (appName, cb) {
+    var self = this;
+
+    self.listInstalled(function (err, apps) {
+	if (err) {
+	    cb(err);
+	} else {
+	    var i = 0,
+		found = false;
+	    while (i < apps.length && !found) {
+		if (apps[i]['name'].indexOf(appName) != -1 || 
+		    apps[i]['fullname'].indexOf(appName) != -1) {
+		    cb(null, true);
+		    found = true;
+		}
+	    }
+	    if (!found)
+		cb(null, false);
+	}
+    });
+};
+
 IDevice.prototype.listInstalled = function (cb) {
     this.list(null, cb);
 };
