@@ -78,10 +78,10 @@ build() {
     args=""
 }
 
-mkdir -p ideviceinstaller
-pushd ideviceinstaller
+dest="/usr/local/ideviceinstaller"
 
-dest=`pwd`
+mkdir -p $dest
+pushd $dest
 
 PATH=$dest"/bin":$PATH
 echo $PATH
