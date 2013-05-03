@@ -2,12 +2,12 @@
 
 ## Step 1
 
-### Make awsome App
+### Make awesome App
 
 ## Step 2
 
-### Getting a provisionning profile
-You can find information about provisionning profiles and the general iOS dev workflow at the [Apple Dev website][1] or more specifically information about [distribution][3] or [organization][2] 
+### Getting a provisioning profile
+You can find information about provisioning profiles and the general iOS dev work-flow at the [Apple Dev website][1] or more specifically information about [distribution][3] or [organization][2] 
 
 ### Build app
 ```
@@ -16,7 +16,7 @@ xcodebuild -sdk iphoneos -configuration Debug CODE_SIGN_IDENTITY="iPhone Develop
 
 ### Package IPA
 ```
-xcrun -sdk iphoneos PackageApplication reletive/path/to/your/App.app -o /Absolute/Path/for/your/packaged/App.ipa
+xcrun -sdk iphoneos PackageApplication relative/path/to/your/App.app -o /Absolute/Path/for/your/packaged/App.ipa
 ```
 
 ## Step 3
