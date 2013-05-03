@@ -26,6 +26,9 @@ device.install(app, function (err) {
 	// Do stuff when app is installed
 });
 ```
+### Note
+ideviceinstaller consumes IPA packages, please see the [docs](https://github.com/OniOni/node-idevice/docs/building_ipa.md) on how to get an IPA from your App.
+
 ### Removing
 ```javascript
 device.remove('domain.organisation.App', function (err) {
