@@ -27,7 +27,7 @@ device.install(app, function (err) {
 });
 ```
 ### Note
-ideviceinstaller consumes IPA packages, please see the [docs](https://github.com/OniOni/node-idevice/docs/building_ipa.md) on how to get an IPA from your App.
+ideviceinstaller consumes IPA packages, please see the [docs](https://github.com/OniOni/node-idevice/blob/master/docs/building_ipa.md) on how to get an IPA from your App.
 
 ### Removing
 ```javascript
