@@ -1,7 +1,8 @@
 "use strict";
 
 var exec = require('child_process').exec,
-    path = require('path');
+    path = require('path'),
+    fs = require('fs');
 
 var IDevice = function (udid, opts) {
     this.udid = udid || false;
@@ -10,6 +11,32 @@ var IDevice = function (udid, opts) {
     if (opts && opts.cmd) {
 	this.cmd = opts.cmd;
     }
+
+    if (!this._check_cmd()) {
+	throw "Executable not found";
+    }
+};
+
+IDevice.prototype._check_cmd = function () {
+    var ret = false;
+
+    // Check if path is given
+    if (this.cmd[0] == '.' || this.cmd[0] == '/') {
+	ret = fs.existsSync(this.cmd);
+    } else {
+	var bins = process.env.PATH.split(':'),
+	    i = 0,
+	    found = false;
+	while (!found && i < bins.length) {
+	    if (fs.existsSync(bins[i]+"/"+this.cmd)) {
+		ret = true;
+		found = true;
+	    }
+	    i++;
+	}
+    }
+
+    return ret;
 };
 
 IDevice.prototype._build_cmd = function (options) {
@@ -66,7 +93,7 @@ IDevice.prototype.isInstalled = function (appName, cb) {
 	    var i = 0,
 		found = false;
 	    while (i < apps.length && !found) {
-		if (apps[i]['name'].indexOf(appName) != -1 || 
+		if (apps[i]['name'].indexOf(appName) != -1 ||
 		    apps[i]['fullname'].indexOf(appName) != -1) {
 		    cb(null, true);
 		    found = true;
@@ -120,5 +147,5 @@ IDevice.prototype.install = function (app, cb) {
 
 
 module.exports = function (uuid, opts) {
-  return new IDevice(uuid);
+  return new IDevice(uuid, opts);
 };
