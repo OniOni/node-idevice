@@ -6,7 +6,7 @@ var exec = require('child_process').exec,
 
 var IDevice = function (udid, opts) {
     this.udid = udid || false;
-    this.cmd = "./ideviceinstaller/bin/ideviceinstaller";
+    this.cmd = "ideviceinstaller";
 
     if (opts && opts.cmd) {
 	this.cmd = opts.cmd;

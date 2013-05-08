@@ -9,7 +9,11 @@ brew install ideviceinstaller
 ```
 You can then tell node-idevice to use the command:
 ```javascript
-var device = new IDevice(false, {cmd: 'ideviceinstaller'});
+// Use executable found on PATH env
+var device = new IDevice();
+
+// Or you can manually set the executable
+var device = new IDevice(false, {cmd: './path/to/ideviceinstaller'});
 ```
 
 If you want to build the binary yourself you can try:
