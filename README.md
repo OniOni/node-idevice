@@ -9,7 +9,7 @@ brew install ideviceinstaller
 ```
 You can then tell node-idevice to use the command:
 ```javascript
-// Use executable found on PATH env
+// Use executable found in your $PATH
 var device = new IDevice();
 
 // Or you can manually set the executable
@@ -42,13 +42,13 @@ device.remove('domain.organisation.App', function (err) {
 ### Checking if an app is Installed
 ```javascript
 device.isInstalled(appName, function (err, installed) {
-	// Installed true when app is found on device
+	// Installed is true when app is found on device
 });
 ```
 ### Listing Installed apps
 ```javascript
 device.listInstalled(function (err, data) {
-	// data is list of objects, one per app
+	// data is a list of objects, one per app
 	// The object contains info about the app, currently 'name' and 'fullname'
 });
 ```
