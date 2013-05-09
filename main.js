@@ -153,7 +153,6 @@ IDevice.prototype.installAndWait = function (ipa, app, cb) {
 	    if (installed) {
 		cb(null, true);
 	    } else {
-		console.log("check again in 500ms");
 		setTimeout(check, 500);
 	    }
 	});
