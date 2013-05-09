@@ -145,6 +145,29 @@ IDevice.prototype.install = function (app, cb) {
     });
 };
 
+IDevice.prototype.installAndWait = function (ipa, app, cb) {
+    var self = this;
+
+    var check = function () {
+	self.isInstalled(app, function (err, installed) {
+	    if (installed) {
+		cb(null, true);
+	    } else {
+		console.log("check again in 500ms");
+		setTimeout(check, 500);
+	    }
+	});
+    }
+
+    this.install(ipa, function (err) {
+	if (err) {
+	    cb(null);
+	} else {
+	    var inter = setTimeout(check, 500)
+	}
+    })
+}
+
 
 module.exports = function (uuid, opts) {
   return new IDevice(uuid, opts);
