@@ -4,20 +4,22 @@ var IDevice = require('../main.js'),
 
 var device = new IDevice();
 
-device.listInstalled(function (err, data) {
-    assert.equal(err, null, 'Error should be null. Error was '+err);
-    assert.equal(data.length, 2, 'Only two apps should be installed');
+var app = path.resolve(__dirname, '../apps/TestApp.ipa'),
+    appName = 'io.appium.TestApp';
 
-    device.remove('io.appium.TestApp', function (err) {
+device.installAndWait(app, appName, function (err, success) {
+    assert.equal(null, err);
+    assert.ok(success);
+    console.log('Installed !');
+
+    device.isInstalled(appName, function (err, installed) {
 	assert.equal(null, err);
-    	console.log('Removed !');
+	assert.ok(installed);
 
-	var app = path.resolve(__dirname, '../apps/TestApp.ipa');
-	device.install(app, function (err) {
+	device.remove(appName, function (err) {
 	    assert.equal(null, err);
-	    console.log('Installed !');
+    	    console.log('Removed !');
 	});
-
     });
 });
 
