@@ -92,11 +92,14 @@ IDevice.prototype.isInstalled = function (appName, cb) {
 	} else {
 	    var i = 0,
 		found = false;
+
 	    while (i < apps.length && !found) {
 		if (apps[i]['name'].indexOf(appName) != -1 ||
 		    apps[i]['fullname'].indexOf(appName) != -1) {
 		    cb(null, true);
 		    found = true;
+		} else {
+		  i++;
 		}
 	    }
 	    if (!found)
