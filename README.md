@@ -25,10 +25,15 @@ This should pull and build all the dependencies. Be warned this is pretty long.
 We currently support installing, removing and listing apps on a device.
 ### Installing
 ```javascript
-var app = path.resolve(__dirname, '../path/to/your/App.ipa');
-device.install(app, function (err) {
+var ipa = path.resolve(__dirname, '../path/to/your/App.ipa');
+device.install(ipa, function (err) {
 	// Do stuff when app is installed
 });
+
+// If you want to be sure the callback executes with the app on device you can use
+device.installAndWait(ipa, 'domain.organisation.App', function (err, success) {
+    // Do stuff when app is on device and ready
+})
 ```
 ### Note
 ideviceinstaller consumes IPA packages, please see the [docs](https://github.com/OniOni/node-idevice/blob/master/docs/building_ipa.md) on how to get an IPA from your App.
