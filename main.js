@@ -5,38 +5,37 @@ var exec = require('child_process').exec,
     fs = require('fs');
 
 var IDevice = function (udid, opts) {
-    this.udid = udid || false;
-    this.cmd = "ideviceinstaller";
+  this.udid = udid || false;
+  this.cmd = "ideviceinstaller";
 
-    if (opts && opts.cmd) {
-	this.cmd = opts.cmd;
-    }
+  if (!this._check_cmd()) {
+    throw new Error("Could not find " + this.cmd + ". Please install ideviceinstaller using " +
+    "Homebrew, e.g. `brew install -g ideviceinstaller`, and ensure it is available " +
+    "from PATH.");
+  }
+};
 
-    if (!this._check_cmd()) {
-	throw "Executable not found";
-    }
+var _prependDirSeparator = function (str) {
+
+  if (str[0] !== "/" && str[0] !== "\\") {
+    str = "/" + str;
+  }
+
+  return str;
 };
 
 IDevice.prototype._check_cmd = function () {
-    var ret = false;
+  var found = fs.existsSync(this.cmd);
 
-    // Check if path is given
-    if (this.cmd[0] == '.' || this.cmd[0] == '/') {
-	ret = fs.existsSync(this.cmd);
-    } else {
-	var bins = process.env.PATH.split(':'),
-	    i = 0,
-	    found = false;
-	while (!found && i < bins.length) {
-	    if (fs.existsSync(bins[i]+"/"+this.cmd)) {
-		ret = true;
-		found = true;
-	    }
-	    i++;
-	}
+  if (!found && this.cmd[0] !== '.') {
+    var bins = process.env.PATH.split(':');
+    var path = _prependDirSeparator(this.cmd);
+    for (var i = 0; !found && i < bins.length; i++) {
+      found = fs.existsSync(bins[i] + path);
     }
+  }
 
-    return ret;
+  return found;
 };
 
 IDevice.prototype._build_cmd = function (options) {
