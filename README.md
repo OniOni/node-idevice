@@ -2,8 +2,7 @@
 
 Install apps to your ios device with node.
 
-This project depends on ideviceinstaller from the [libimobiledevice](http://www.libimobiledevice.org/) project.
-The currently preferred way of obtaining the binary is to use brew.
+This project depends on ideviceinstaller from the [libimobiledevice](http://www.libimobiledevice.org/) project. The currently preferred way of obtaining the binary is to use brew.
 ```
 brew install ideviceinstaller
 ```

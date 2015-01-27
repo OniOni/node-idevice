@@ -1,6 +1,6 @@
 {
   "name": "node-idevice",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Install apps on your ios device. Node wrapper around ideviceinstaller. ",
   "main": "main.js",
   "scripts": {
