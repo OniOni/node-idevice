@@ -44,7 +44,7 @@ IDevice.prototype._build_cmd = function (options) {
     cmd += this.cmd;
 
     if (this.udid) {
-	cmd += " -U " + this.udid;
+	cmd += " -u " + this.udid;
     }
 
     if (typeof options == 'object' && options.indexOf) {
