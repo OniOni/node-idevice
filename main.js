@@ -43,7 +43,7 @@ IDevice.prototype._build_cmd = function (options) {
 
     cmd += this.cmd;
 
-    if (this.uuid) {
+    if (this.udid) {
 	cmd += " -U " + this.udid;
     }
 
@@ -170,6 +170,6 @@ IDevice.prototype.installAndWait = function (ipa, app, cb) {
 }
 
 
-module.exports = function (uuid, opts) {
-  return new IDevice(uuid, opts);
+module.exports = function (udid, opts) {
+  return new IDevice(udid, opts);
 };
