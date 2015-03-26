@@ -15,6 +15,20 @@ var IDevice = function (udid, opts) {
   }
 };
 
+var wrapForExec = function (s) {
+  // not a string
+  if (typeof s !== 'string') return s;
+  // already wrapped
+  if (s.match(/^['"].*['"]$/)) return s;
+  // wrap if necessary;
+  if (s.match(/[\s"]/)) {
+    // escape quote
+    s = s.replace(/"/g, '\\"');
+    return '"' + s + '"';
+  }
+  return s;
+};
+
 var _prependDirSeparator = function (str) {
 
   if (str[0] !== "/" && str[0] !== "\\") {
@@ -89,20 +103,13 @@ IDevice.prototype.isInstalled = function (appName, cb) {
 	if (err) {
 	    cb(err);
 	} else {
-	    var i = 0,
-		found = false;
-
-	    while (i < apps.length && !found) {
+	  for (var i = 0; i < apps.length; i++) {
 		if (apps[i]['name'].indexOf(appName) != -1 ||
 		    apps[i]['fullname'].indexOf(appName) != -1) {
-		    cb(null, true);
-		    found = true;
-		} else {
-		  i++;
+		    return cb(null, true);
 		}
 	    }
-	    if (!found)
-		cb(null, false);
+	    cb(null, false);
 	}
     });
 };
@@ -134,7 +141,7 @@ IDevice.prototype.remove = function (app, cb) {
 };
 
 IDevice.prototype.install = function (app, cb) {
-    exec(this._build_cmd(['-i', app]), function (err, stdout, stderr) {
+    exec(this._build_cmd(['-i', wrapForExec(app)]), function (err, stdout, stderr) {
 	if (err) {
 	    cb(err, stdout);
 	} else {
