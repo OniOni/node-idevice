@@ -72,10 +72,18 @@ IDevice.prototype.list = function (option, cb) {
 	    var apps = stdout.split('\n'),
 		res = [];
 	    for (var i = 0; i < apps.length; i++) {
+               // handle old-style output
 		var info = apps[i].split(' - ');
-		if (info.length == 2) {
+		if (info.length === 2) {
 		    res.push({name: info[1], fullname: info[0]});
 		}
+
+               // handle new-style output
+               info = apps[i].replace(/"/g, "").split(",");
+               if (info.length === 3) {
+                   var name = info[2].trim() + " " + info[1].trim();
+                   res.push({name: name, fullname: info[0]});
+               }
 	    }
 	    cb(null, res);
 	}
