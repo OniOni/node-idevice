@@ -135,7 +135,7 @@ IDevice.prototype.listAll = function (cb) {
 };
 
 IDevice.prototype.remove = function (app, cb) {
-    exec(this._build_cmd(['-u', app]), function (err, stdout, stderr) {
+    exec(this._build_cmd(['-U', app]), function (err, stdout, stderr) {
 	if (err) {
 	    cb(err, stdout);
 	} else {
