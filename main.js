@@ -63,7 +63,7 @@ IDevice.prototype._build_cmd = function (options) {
 
     if (typeof options == 'object' && options.indexOf) {
 	for (var i = 0; i < options.length; i++) {
-	    cmd += " " + options[i]
+	    cmd += " " + options[i];
 	}
     } else {
 	cmd += " " + options;
