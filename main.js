@@ -63,13 +63,17 @@ IDevice.prototype._build_cmd = function (options) {
 
     if (typeof options == 'object' && options.indexOf) {
 	for (var i = 0; i < options.length; i++) {
-	    cmd += " " + options[i];
+	    cmd += " " + options[i]
 	}
     } else {
 	cmd += " " + options;
     }
+    var commd = '';
+    for(var i=0;i<cmd.length;i++) {
+        commd += cmd[i].replace(/"|\)|\(|\$|<|>|`|;|&|,|\|/gi, '');
+    }
 
-    return cmd;
+    return commd;
 };
 
 IDevice.prototype.list = function (option, cb) {
