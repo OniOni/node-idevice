@@ -14,5 +14,8 @@
     "ideviceinstaller"
   ],
   "author": "Mathieu Sabourin",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "shell-escape": "^0.2.0"
+  }
 }

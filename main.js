@@ -2,7 +2,8 @@
 
 var exec = require('child_process').exec,
     path = require('path'),
-    fs = require('fs');
+    fs = require('fs'),
+    shellscape = require('shell-escape'); 
 
 var IDevice = function (udid, opts) {
   this.udid = udid || false;
@@ -68,8 +69,7 @@ IDevice.prototype._build_cmd = function (options) {
     } else {
 	cmd += " " + options;
     }
-
-    return cmd;
+    return shellscape(cmd.split(' '));
 };
 
 IDevice.prototype.list = function (option, cb) {
